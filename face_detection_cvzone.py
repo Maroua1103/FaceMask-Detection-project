@@ -7,13 +7,15 @@ detector = FaceDetector()
 while True:
     success, img = cap.read()
     img, bboxs = detector.findFaces(img)
-
     if bboxs:
-        # bboxInfo - "id","bbox","score","center"
-        center = bboxs[0]["center"]
-        cv2.circle(img, center, 5, (255, 0, 255), cv2.FILLED)
+        print(bboxs)
+        box = bboxs[0]['bbox']
+        cropped_image = img[   box[1]:box[1]+box[3]    ,  box[0]:box[0]+box[2] ]
+                                  #height                         #width
 
     cv2.imshow("Image", img)
+    cv2.imshow("cropped Image", cropped_image)
+   
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 cap.release()
